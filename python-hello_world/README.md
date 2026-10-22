@@ -5,6 +5,7 @@ Introductory Python and shell scripting tasks for the alu-higher_level_programmi
 | File    | Description                                                                |
 |---------|----------------------------------------------------------------------------|
 | `0-run` | Bash script that runs the Python file named in the `$PYFILE` env variable |
+ 2 -print  script to print
 
 ## Usage
 
