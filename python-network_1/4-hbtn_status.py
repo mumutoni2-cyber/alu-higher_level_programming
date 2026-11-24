@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-import urllib.request
+"""Fetches https://alu-intranet.hbtn.io/status using requests."""
+import requests
 
 if __name__ == "__main__":
-    with urllib.request.urlopen("https://alu-intranet.hbtn.io/status") as response:
-        body = response.read()
-
-        print("Body response:")
-        print("\t- type: {}".format(type(body)))
-        print("\t- content: {}".format(body))
-        print("\t- utf8 content: {}".format(body.decode("utf-8")))
+    res = requests.get("https://alu-intranet.hbtn.io/status")
+    print("Body response:")
+    print("\t- type: {}".format(type(res.text)))
+    print("\t- content: {}".format(res.text))
