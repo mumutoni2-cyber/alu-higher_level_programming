@@ -29,3 +29,12 @@ cat 8-cities_of_california_subquery.sql | mysql -hlocalhost -uroot -p hbtn_0d_us
 | 14-my_genres.sql | Genres of Dexter |
 | 15-comedy_only.sql | Comedy shows |
 | 16-shows_by_genre.sql | All shows with their genres |
+
+Advanced tasks:
+
+| File | Description |
+| --- | --- |
+| 100-not_my_genres.sql | Genres not linked to Dexter |
+| 101-not_a_comedy.sql | Shows without the Comedy genre |
+| 102-rating_shows.sql | Shows by rating sum |
+| 103-rating_genres.sql | Genres by rating sum |
