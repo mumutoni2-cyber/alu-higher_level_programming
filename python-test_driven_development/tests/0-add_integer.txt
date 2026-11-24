@@ -53,6 +53,24 @@ Missing arguments:
     Traceback (most recent call last):
     TypeError: add_integer() missing 1 required positional argument: 'a'
 
+Float overflow (infinity cannot be cast to an integer):
+
+    >>> add_integer(float('inf'))
+    Traceback (most recent call last):
+    OverflowError: cannot convert float infinity to integer
+
+    >>> add_integer(1, float('inf'))
+    Traceback (most recent call last):
+    OverflowError: cannot convert float infinity to integer
+
+    >>> add_integer(float('-inf'), 1)
+    Traceback (most recent call last):
+    OverflowError: cannot convert float infinity to integer
+
+    >>> add_integer(1e308 * 10, 2)
+    Traceback (most recent call last):
+    OverflowError: cannot convert float infinity to integer
+
 Not a number:
 
     >>> add_integer(float('nan'))
