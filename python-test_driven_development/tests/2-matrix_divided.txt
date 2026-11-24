@@ -19,6 +19,13 @@ Floats, negatives and a float divisor:
     >>> matrix_divided([[1.5, -2.5], [3, 4]], 2.5)
     [[0.6, -1.0], [1.2, 1.6]]
 
+Infinite divisor gives only 0.0 (no negative zero):
+
+    >>> matrix_divided([[1, -2, 3], [-4, 5, 0]], float('inf'))
+    [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    >>> matrix_divided([[1, -2], [3, 4]], float('-inf'))
+    [[0.0, 0.0], [0.0, 0.0]]
+
 Invalid matrices:
 
     >>> matrix_divided("abc", 2)

@@ -24,4 +24,4 @@ def matrix_divided(matrix, div):
         raise TypeError("div must be a number")
     if div == 0:
         raise ZeroDivisionError("division by zero")
-    return [[round(el / div, 2) for el in row] for row in matrix]
+    return [[round(el / div, 2) + 0.0 for el in row] for row in matrix]
