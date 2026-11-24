@@ -29,3 +29,12 @@ cat 10-top_score.sql | mysql -hlocalhost -uroot -p hbtn_0c_0
 | 14-average.sql | Average score |
 | 15-groups.sql | Number of records per score |
 | 16-no_link.sql | Records with a name, by score |
+
+Advanced tasks:
+
+| File | Description |
+| --- | --- |
+| 100-move_to_utf8.sql | Converts `hbtn_0c_0`, `first_table` and `name` to utf8mb4 |
+| 101-avg_temperatures.sql | Average temperature by city |
+| 102-top_city.sql | Top 3 cities in July and August |
+| 103-max_state.sql | Max temperature per state |
