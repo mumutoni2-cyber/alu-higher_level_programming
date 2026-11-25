@@ -119,5 +119,50 @@ class TestBase(unittest.TestCase):
         self.assertTrue(all(isinstance(s, Square) for s in out))
 
 
+class TestBaseSpec(unittest.TestCase):
+    """Explicit spec-case tests for Base."""
+
+    def setUp(self):
+        Base._Base__nb_objects = 0
+
+    def test_base_auto_id(self):
+        self.assertEqual(Base().id, 1)
+
+    def test_base_auto_id_plus_one(self):
+        b1 = Base()
+        b2 = Base()
+        self.assertEqual(b2.id, b1.id + 1)
+
+    def test_base_id_passed(self):
+        self.assertEqual(Base(89).id, 89)
+
+    def test_to_json_string_none(self):
+        self.assertEqual(Base.to_json_string(None), "[]")
+
+    def test_to_json_string_empty(self):
+        self.assertEqual(Base.to_json_string([]), "[]")
+
+    def test_to_json_string_one_dict(self):
+        self.assertEqual(Base.to_json_string([{'id': 12}]),
+                         '[{"id": 12}]')
+
+    def test_to_json_string_returns_str(self):
+        self.assertIsInstance(Base.to_json_string([{'id': 12}]), str)
+
+    def test_from_json_string_none(self):
+        self.assertEqual(Base.from_json_string(None), [])
+
+    def test_from_json_string_empty_list(self):
+        self.assertEqual(Base.from_json_string("[]"), [])
+
+    def test_from_json_string_one_dict(self):
+        self.assertEqual(Base.from_json_string('[{ "id": 89 }]'),
+                         [{"id": 89}])
+
+    def test_from_json_string_returns_list(self):
+        self.assertIsInstance(Base.from_json_string('[{ "id": 89 }]'),
+                              list)
+
+
 if __name__ == "__main__":
     unittest.main()
