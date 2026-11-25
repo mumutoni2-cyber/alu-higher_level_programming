@@ -20,3 +20,13 @@ Scripts that talk to a MySQL server on `localhost:3306`, first with
 Usage: `./0-select_states.py <mysql user> <mysql password> <database>`
 (scripts 2, 3, 5 and 10 take a fourth argument: the name to search).
 Requires `mysqlclient` 2.0.x and `SQLAlchemy` 1.4.x.
+
+## Relationships
+
+| File | Description |
+| ---- | ----------- |
+| `relationship_state.py` | `State` with a `cities` relationship (cascade delete) and `City.state` backref |
+| `relationship_city.py` | `City` model using the relationship `Base` |
+| `100-relationship_states_cities.py` | Creates California with San Francisco |
+| `101-relationship_states_cities_list.py` | Lists states and their cities (one query) |
+| `102-relationship_cities_states_list.py` | Lists cities with their state (one query) |
