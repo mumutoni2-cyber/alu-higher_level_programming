@@ -14,7 +14,8 @@ class TestBase(unittest.TestCase):
         Base._Base__nb_objects = 0
 
     def tearDown(self):
-        for name in ("Base.json", "Rectangle.json", "Square.json"):
+        for name in ("Base.json", "Rectangle.json", "Square.json",
+                     "Rectangle.csv", "Square.csv"):
             if os.path.exists(name):
                 os.remove(name)
 
@@ -162,6 +163,69 @@ class TestBaseSpec(unittest.TestCase):
     def test_from_json_string_returns_list(self):
         self.assertIsInstance(Base.from_json_string('[{ "id": 89 }]'),
                               list)
+
+
+class TestBaseCsv(unittest.TestCase):
+    """Tests for CSV serialization."""
+
+    def setUp(self):
+        Base._Base__nb_objects = 0
+
+    def tearDown(self):
+        for name in ("Rectangle.csv", "Square.csv"):
+            if os.path.exists(name):
+                os.remove(name)
+
+    def test_save_rectangle_format(self):
+        Rectangle.save_to_file_csv([Rectangle(10, 7, 2, 8, 1),
+                                    Rectangle(2, 4, 0, 0, 2)])
+        with open("Rectangle.csv") as f:
+            self.assertEqual(f.read().splitlines(),
+                             ["1,10,7,2,8", "2,2,4,0,0"])
+
+    def test_save_square_format(self):
+        Square.save_to_file_csv([Square(5, 0, 0, 5), Square(7, 9, 1, 6)])
+        with open("Square.csv") as f:
+            self.assertEqual(f.read().splitlines(), ["5,5,0,0", "6,7,9,1"])
+
+    def test_save_none_and_empty(self):
+        Rectangle.save_to_file_csv(None)
+        with open("Rectangle.csv") as f:
+            self.assertEqual(f.read(), "")
+        Square.save_to_file_csv([])
+        with open("Square.csv") as f:
+            self.assertEqual(f.read(), "")
+
+    def test_save_overwrites(self):
+        Rectangle.save_to_file_csv([Rectangle(1, 1)])
+        Rectangle.save_to_file_csv([])
+        with open("Rectangle.csv") as f:
+            self.assertEqual(f.read(), "")
+
+    def test_load_missing(self):
+        self.assertEqual(Rectangle.load_from_file_csv(), [])
+        self.assertEqual(Square.load_from_file_csv(), [])
+
+    def test_load_empty_file(self):
+        Rectangle.save_to_file_csv([])
+        self.assertEqual(Rectangle.load_from_file_csv(), [])
+
+    def test_roundtrip_rectangle(self):
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        Rectangle.save_to_file_csv([r1, r2])
+        out = Rectangle.load_from_file_csv()
+        self.assertEqual([str(r) for r in out], [str(r1), str(r2)])
+        self.assertIsNot(out[0], r1)
+        self.assertIsInstance(out[0], Rectangle)
+
+    def test_roundtrip_square(self):
+        s1 = Square(5)
+        s2 = Square(7, 9, 1)
+        Square.save_to_file_csv([s1, s2])
+        out = Square.load_from_file_csv()
+        self.assertEqual([str(s) for s in out], [str(s1), str(s2)])
+        self.assertIsInstance(out[0], Square)
 
 
 if __name__ == "__main__":

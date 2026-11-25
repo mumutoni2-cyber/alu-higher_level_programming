@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Module defining the Base class."""
+import csv
 import json
 
 
@@ -66,3 +67,33 @@ class Base:
         except FileNotFoundError:
             return []
         return [cls.create(**d) for d in data]
+
+    @classmethod
+    def _csv_fields(cls):
+        """Return the ordered CSV field names for this class."""
+        if cls.__name__ == "Square":
+            return ["id", "size", "x", "y"]
+        return ["id", "width", "height", "x", "y"]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Write list_objs to <Class name>.csv (overwriting the file)."""
+        if list_objs is None:
+            list_objs = []
+        fields = cls._csv_fields()
+        with open(cls.__name__ + ".csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            for obj in list_objs:
+                d = obj.to_dictionary()
+                writer.writerow([d[k] for k in fields])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Return a list of instances loaded from <Class name>.csv."""
+        fields = cls._csv_fields()
+        try:
+            with open(cls.__name__ + ".csv", "r", newline="") as f:
+                rows = [r for r in csv.reader(f) if r]
+        except FileNotFoundError:
+            return []
+        return [cls.create(**dict(zip(fields, map(int, r)))) for r in rows]
